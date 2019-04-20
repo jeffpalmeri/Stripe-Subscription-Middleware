@@ -5,6 +5,7 @@ const passport = require('passport');
 const keyPublishable = process.env.PUBLISHABLE_KEY;
 const keySecret = process.env.SECRET_KEY;
 const stripe = require("stripe")(keySecret);
+const stripeSubscriptionPlan = process.env.STRIPE_SUBSCRIPTION_PLAN;
 
 module.exports = {
   // Get /
@@ -83,7 +84,7 @@ module.exports = {
     .then(customer =>
       stripe.subscriptions.create({
         customer: customer.id,
-        items: [{plan: 'plan_EsJNiISszGvsNW'}],
+        items: [{plan: stripeSubscriptionPlan }],
       }))
     .then(charge => res.render("charge"));
 
